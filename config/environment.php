@@ -7,10 +7,7 @@ class Environment
 {
     private static bool $loaded = false;
 
-    /**
-     * Charge le fichier .env situé à la racine du projet (s'il existe)
-     * et définit les variables via putenv()/$_ENV.
-     */
+    
     public static function load(): void
     {
         if (self::$loaded) {
