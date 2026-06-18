@@ -51,10 +51,7 @@ class Environment
         return self::get('APP_ENV', 'development') === 'production';
     }
 
-    /**
-     * En local (development) : affiche les erreurs PHP/SQL détaillées.
-     * En production : masque les erreurs et affiche une page générique "Erreur 500".
-     */
+    
     private static function configureErrorHandling(): void
     {
         if (self::isProduction()) {
