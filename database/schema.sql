@@ -1,13 +1,9 @@
--- ============================================================
--- PharmaFEFO - Schéma de base de données (correspond à l'ERD)
--- ============================================================
+
 
 CREATE DATABASE IF NOT EXISTS pharmafefo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE pharmafefo;
 
--- ----------------------------------------------------------
--- Table: users
--- ----------------------------------------------------------
+
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -17,9 +13,8 @@ CREATE TABLE users (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- ----------------------------------------------------------
--- Table: products
--- ----------------------------------------------------------
+
+
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
@@ -27,9 +22,7 @@ CREATE TABLE products (
     unit_price DECIMAL(10,2) NOT NULL DEFAULT 0
 );
 
--- ----------------------------------------------------------
--- Table: stock_batches  (1 product -> * stock_batches)
--- ----------------------------------------------------------
+
 CREATE TABLE stock_batches (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,
@@ -43,9 +36,7 @@ CREATE TABLE stock_batches (
     CONSTRAINT fk_batch_user FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
--- ----------------------------------------------------------
--- Table: stock_movements (1 stock_batch -> * mouvements)
--- ----------------------------------------------------------
+
 CREATE TABLE stock_movements (
     id INT AUTO_INCREMENT PRIMARY KEY,
     stock_batch_id INT NOT NULL,
@@ -57,9 +48,6 @@ CREATE TABLE stock_movements (
     CONSTRAINT fk_movement_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
--- ----------------------------------------------------------
--- Table: alerts (1 stock_batch -> * alerts)
--- ----------------------------------------------------------
 CREATE TABLE alerts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     stock_batch_id INT NOT NULL,
@@ -69,21 +57,15 @@ CREATE TABLE alerts (
     CONSTRAINT fk_alert_batch FOREIGN KEY (stock_batch_id) REFERENCES stock_batches(id) ON DELETE CASCADE
 );
 
--- ----------------------------------------------------------
--- Table: alert_thresholds (Configurer seuils d'alerte - Admin)
--- ----------------------------------------------------------
 CREATE TABLE alert_thresholds (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    warning_days INT NOT NULL DEFAULT 90,   -- < 90 jours = Orange
-    critical_days INT NOT NULL DEFAULT 30   -- < 30 jours = Rouge
+    warning_days INT NOT NULL DEFAULT 90,   
+    critical_days INT NOT NULL DEFAULT 30   
 );
 
 INSERT INTO alert_thresholds (warning_days, critical_days) VALUES (90, 30);
 
--- ============================================================
--- Utilisateurs de démo (mot de passe pour les 3 : "password")
--- Hash bcrypt généré avec password_hash('password', PASSWORD_DEFAULT)
--- ============================================================
+
 INSERT INTO users (name, email, password, role) VALUES
 ('Khalid Préparateur', 'preparateur@pharmafefo.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'preparateur'),
 ('Dr. Salma Pharmacien', 'pharmacien@pharmafefo.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'pharmacien'),
