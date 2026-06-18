@@ -1,6 +1,5 @@
 <?php
-// config/database.php
-// Connexion PDO encapsulée (Singleton)
+
 
 namespace PharmaFEFO\Config;
 
