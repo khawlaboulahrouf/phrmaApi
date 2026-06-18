@@ -1,6 +1,4 @@
-// public/js/inventory.js
-// Logique Fetch API de la page Pharmacien "Validation de l'inventaire".
-// Dépend de apiFetch() défini dans app.js.
+
 
 const API_BASE = 'index.php?route=api/v1/';
 
@@ -63,10 +61,7 @@ function buildActionCell(batch) {
     return '<em>—</em>';
 }
 
-/**
- * US 4.1 - Déclare un lot périmé ou initie un retour fournisseur,
- * de façon asynchrone, sans rafraîchir le navigateur.
- */
+
 async function handleAction(action, batchId) {
     const route = action === 'declare-expired'
         ? `batches/${batchId}/expire`
