@@ -1,7 +1,5 @@
 <?php
-// config/environment.php
-// Gestion des variables d'environnement (dev / prod)
-// Charge le fichier .env (s'il existe) et configure l'affichage des erreurs.
+
 
 namespace PharmaFEFO\Config;
 
