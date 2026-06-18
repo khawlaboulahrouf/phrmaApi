@@ -1,6 +1,4 @@
-// public/js/app.js
-// Gestion globale : helper fetch sécurisé + gestion des erreurs réseau communes.
-// Aucune bibliothèque tierce (JQuery interdit) - API native fetch() uniquement.
+
 
 /**
  * Wrapper autour de fetch() qui gère uniformément les erreurs réseau et HTTP.
@@ -47,10 +45,7 @@ function buildErrorMessage(status, message) {
     return message;
 }
 
-/**
- * Affiche une alerte claire dans une zone dédiée de la page (#api-error),
- * ou en repli un une alerte navigateur si la zone n'existe pas.
- */
+
 function showGlobalAlert(message) {
     const box = document.getElementById('api-error');
     if (box) {
