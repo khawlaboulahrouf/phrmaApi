@@ -1,7 +1,5 @@
 <?php
-// public/index.php
-// Point d'entrée unique (DocumentRoot) - CONTRÔLEUR FRONTAL / ROUTEUR
-// Aiguille vers les contrôleurs Web (HTML) ou Api (JSON) selon la route.
+
 
 declare(strict_types=1);
 
@@ -12,7 +10,6 @@ use PharmaFEFO\Config\Environment;
 
 Environment::load();
 
-// Autoload simple PSR-4 (sans Composer) - gère les sous-namespaces Controller\Web et Controller\Api
 spl_autoload_register(function (string $class) {
     $prefix = 'PharmaFEFO\\';
     $baseDir = __DIR__ . '/../src/';
@@ -44,9 +41,6 @@ $route = $_GET['route'] ?? 'dashboard';
 
 switch ($route) {
 
-    // ================================================================
-    // AUTHENTIFICATION (contrôleurs Web - HTML, rechargement classique)
-    // ================================================================
     case 'login':
         (new AuthController())->showLogin();
         break;
@@ -59,9 +53,7 @@ switch ($route) {
         (new AuthController())->logout();
         break;
 
-    // ================================================================
-    // PAGES WEB (squelettes HTML - données chargées par JS via l'API)
-    // ================================================================
+
     case 'dashboard':
         AuthService::requireLogin();
         (new DashboardController())->index();
@@ -97,38 +89,29 @@ switch ($route) {
         (new AdminController())->products();
         break;
 
-    // US 4.2 - Route strictement interdite aux préparateurs et pharmaciens.
     case 'admin/reports':
         AuthService::requireRole(User::ROLE_ADMIN);
         (new AdminController())->reports();
         break;
 
-    // ================================================================
-    // API REST (contrôleurs Api - JSON uniquement, jamais de require de template)
-    // ================================================================
-
-    // US 1.1 - POST /api/v1/stock/add (rôle PREPARATEUR)
+  
     case 'api/v1/stock/add':
         (new ApiStockController())->add();
         break;
 
-    // US 2.1 - GET /api/v1/batches?criteria=critical (lecture, tous rôles connectés)
     case 'api/v1/batches':
         (new ApiDashboardController())->batches();
         break;
 
-    // US 2.2 - GET /api/v1/dashboard/summary
     case 'api/v1/dashboard/summary':
         (new ApiDashboardController())->summary();
         break;
 
-    // US 3.1 - POST /api/v1/batches/checkout (rôle PREPARATEUR)
     case 'api/v1/batches/checkout':
         (new ApiStockController())->checkout();
         break;
 
     default:
-        // Routes dynamiques /api/v1/batches/{id}/expire et /api/v1/batches/{id}/return-supplier
         if (preg_match('#^api/v1/batches/(\d+)/expire$#', $route, $m)) {
             $_GET['id'] = (int) $m[1];
             (new ApiStockController())->declareExpired();
