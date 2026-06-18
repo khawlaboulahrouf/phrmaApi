@@ -1,6 +1,5 @@
 <?php
-// src/Controller/Api/ApiDashboardController.php
-// CONTROLEUR API : retourne uniquement du JSON, jamais de HTML/require de template.
+
 
 namespace PharmaFEFO\Controller\Api;
 
@@ -17,11 +16,7 @@ class ApiDashboardController
         $this->stockService = new StockService();
     }
 
-    /**
-     * GET /api/v1/batches?criteria=critical
-     * US 2.1 - Liste des lots filtrés par critère ('all', 'critical', 'warning', 'ok', 'expired').
-     * Accessible aux 3 rôles connectés (lecture seule).
-     */
+  
     public function batches(): void
     {
         AuthService::requireApiLogin();
@@ -37,10 +32,7 @@ class ApiDashboardController
         ]);
     }
 
-    /**
-     * GET /api/v1/dashboard/summary
-     * US 2.2 - Encadré dynamique : décompte des produits qui périment le mois prochain.
-     */
+   
     public function summary(): void
     {
         AuthService::requireApiLogin();
