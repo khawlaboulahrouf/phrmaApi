@@ -1,15 +1,10 @@
-// public/js/dashboard.js
-// Logique Fetch API du tableau de bord (US 2.1, 2.2) et des actions de stock (US 3.1, 4.1).
-// Dépend de apiFetch() défini dans app.js (chargé avant ce fichier).
+
 
 const API_BASE = 'index.php?route=api/v1/';
 
 let currentCriteria = 'all';
 
-/**
- * US 2.2 - Charge l'encadré dynamique (décompte des produits qui périment
- * le mois prochain) dès l'arrivée sur le dashboard.
- */
+
 async function loadSummary() {
     const { ok, data } = await apiFetch(API_BASE + 'dashboard/summary');
     if (!ok || !data || !data.success) return;
@@ -20,10 +15,7 @@ async function loadSummary() {
     document.getElementById('count-expiring').textContent = data.data.expiring_next_month;
 }
 
-/**
- * US 2.1 - Charge la liste des lots filtrés par critère et reconstruit le DOM du tableau.
- * Le contrôleur PHP ne renvoie plus de HTML : uniquement du JSON consommé ici.
- */
+
 async function loadBatches(criteria = 'all') {
     currentCriteria = criteria;
     const tbody = document.getElementById('batches-tbody');
@@ -54,9 +46,7 @@ function renderBatches(batches) {
     });
 }
 
-/**
- * Construit une ligne <tr> pour un lot, avec les actions disponibles selon son statut.
- */
+
 function buildBatchRow(batch) {
     const tr = document.createElement('tr');
     tr.id = 'batch-row-' + batch.id;
@@ -85,10 +75,7 @@ function escapeHtml(str) {
     return div.innerHTML;
 }
 
-/**
- * US 3.1 - "Délivrer 1 boîte" : décrémente instantanément le lot FEFO en tâche de fond
- * et met à jour l'affichage. Si la quantité tombe à 0, la ligne s'efface.
- */
+
 async function checkoutOneUnit(productId, rowId) {
     const { ok, data } = await apiFetch(API_BASE + 'batches/checkout', {
         method: 'POST',
@@ -111,9 +98,7 @@ async function checkoutOneUnit(productId, rowId) {
     }
 }
 
-/**
- * US 4.1 - Déclare un lot comme "Périmé / À détruire" sans rafraîchir le navigateur.
- */
+
 async function declareExpired(batchId) {
     const { ok, data } = await apiFetch(API_BASE + 'batches/' + batchId + '/expire', {
         method: 'PATCH',
@@ -130,9 +115,6 @@ async function declareExpired(batchId) {
     }
 }
 
-// ----------------------------------------------------------------
-// Initialisation
-// ----------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     loadSummary();
     loadBatches('all');
