@@ -71,9 +71,7 @@ INSERT INTO users (name, email, password, role) VALUES
 ('Dr. Salma Pharmacien', 'pharmacien@pharmafefo.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'pharmacien'),
 ('Mouna Admin', 'admin@pharmafefo.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'administrateur');
 
--- ============================================================
--- Données de test (seed) pour visualiser le dashboard
--- ============================================================
+
 INSERT INTO products (name, reference, unit_price) VALUES
 ('Paracetamol 500mg', 'PARA500', 1.50),
 ('Amoxicilline 1g', 'AMOX1G', 4.20),
