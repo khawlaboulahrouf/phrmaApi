@@ -1,7 +1,4 @@
-// public/js/dispatch.js
-// US 3.1 (Part 2) - "Délivrer 1 boîte" : décrémente instantanément en tâche de fond
-// le lot FEFO adéquat et met à jour l'affichage sans recharger le navigateur.
-// Dépend de apiFetch() défini dans app.js.
+
 
 const API_BASE = 'index.php?route=api/v1/';
 
@@ -17,10 +14,7 @@ async function loadDispatchTable() {
     renderProducts(groupByProductFefo(data.data));
 }
 
-/**
- * Regroupe les lots par produit et garde, pour chaque produit, le lot FEFO
- * (DLU la plus courte) ainsi que la quantité totale disponible.
- */
+
 function groupByProductFefo(batches) {
     const byProduct = new Map();
 
@@ -32,7 +26,7 @@ function groupByProductFefo(batches) {
             byProduct.set(batch.product_id, {
                 productId: batch.product_id,
                 productName: batch.product_name,
-                fefoBatch: batch, // premier lot rencontré = DLU la plus courte
+                fefoBatch: batch, 
                 totalQuantity: 0,
             });
         }
@@ -73,10 +67,7 @@ function buildRow(product) {
     return tr;
 }
 
-/**
- * Envoie la requête asynchrone POST vers /api/v1/batches/checkout.
- * Si la quantité totale tombe à 0, la ligne s'efface d'elle-même.
- */
+
 async function deliverOneBox(productId, btn) {
     btn.disabled = true;
 
