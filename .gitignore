@@ -1,0 +1,13 @@
+# Variables d'environnement (secrets) - NE JAMAIS COMMIT
+.env
+
+# Dépendances
+/vendor/
+/node_modules/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
