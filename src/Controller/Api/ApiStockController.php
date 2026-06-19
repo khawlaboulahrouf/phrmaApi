@@ -1,6 +1,5 @@
 <?php
-// src/Controller/Api/ApiStockController.php
-// CONTROLEUR API : retourne uniquement du JSON, jamais de HTML/require de template.
+
 
 namespace PharmaFEFO\Controller\Api;
 
@@ -18,10 +17,7 @@ class ApiStockController
         $this->stockService = new StockService();
     }
 
-    /**
-     * POST /api/v1/stock/add  (anciennement /stock/add)
-     * US 1.1 - Réception asynchrone d'un nouveau lot. Rôle PREPARATEUR uniquement.
-     */
+  
     public function add(): void
     {
         AuthService::requireApiRole(User::ROLE_PREPARATEUR);
@@ -45,11 +41,7 @@ class ApiStockController
         echo json_encode(['success' => true, 'data' => $result['batch']]);
     }
 
-    /**
-     * POST /api/v1/batches/checkout
-     * US 3.1 - "Délivrer 1 boîte" : décrémente instantanément le lot FEFO adéquat.
-     * Rôle PREPARATEUR uniquement.
-     */
+   
     public function checkout(): void
     {
         AuthService::requireApiRole(User::ROLE_PREPARATEUR);
@@ -68,10 +60,7 @@ class ApiStockController
         echo json_encode(['success' => true, 'data' => $result['batch']]);
     }
 
-    /**
-     * PATCH /api/v1/batches/{id}/expire
-     * US 4.1 - Déclare un lot comme périmé. Rôle PHARMACIEN uniquement.
-     */
+  
     public function declareExpired(): void
     {
         AuthService::requireApiRole(User::ROLE_PHARMACIEN);
@@ -90,9 +79,7 @@ class ApiStockController
         echo json_encode(['success' => true, 'data' => $result['batch']]);
     }
 
-    /**
-     * Lit le corps de la requête : accepte JSON ou FormData (US 1.1, critère d'acceptation).
-     */
+  
     private function readInput(): array
     {
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
@@ -102,7 +89,7 @@ class ApiStockController
             return json_decode($raw, true) ?? [];
         }
 
-        // FormData (multipart/form-data ou x-www-form-urlencoded)
+     
         return $_POST;
     }
 }
