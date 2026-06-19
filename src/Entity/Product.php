@@ -1,5 +1,5 @@
 <?php
-// src/Entity/Product.php
+
 
 namespace PharmaFEFO\Entity;
 
@@ -53,9 +53,7 @@ class Product implements \JsonSerializable
         $this->reference = $reference;
     }
 
-    /**
-     * Sérialisation JSON pour les réponses API (US Part 2 - JsonSerializable).
-     */
+   
     public function jsonSerialize(): array
     {
         return [

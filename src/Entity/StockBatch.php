@@ -1,6 +1,5 @@
 <?php
-// src/Entity/StockBatch.php
-// Objet métier PHP pur (encapsulé) - coeur de la règle FEFO
+
 
 namespace PharmaFEFO\Entity;
 
@@ -16,11 +15,11 @@ class StockBatch implements \JsonSerializable
     private DateTime $expiryDate;
     private BatchStatus $status;
 
-    // Infos optionnelles (jointes par le Repository) pour enrichir la sérialisation API
+
     private ?string $productName = null;
     private ?string $productReference = null;
 
-    // Seuils utilisés pour calculer la criticité dans jsonSerialize()
+  
     private int $warningDays = 90;
     private int $criticalDays = 30;
 
@@ -40,7 +39,7 @@ class StockBatch implements \JsonSerializable
         $this->status = $status;
     }
 
-    // ------------------ Getters / Setters ------------------
+
 
     public function getId(): int
     {
@@ -92,11 +91,7 @@ class StockBatch implements \JsonSerializable
         $this->status = $status;
     }
 
-    // ------------------ Logique métier ------------------
-
-    /**
-     * Nombre de jours restants avant péremption (peut être négatif si périmé)
-     */
+ 
     public function getDaysToExpiry(): int
     {
         $now = new DateTime('today');
@@ -106,20 +101,12 @@ class StockBatch implements \JsonSerializable
         return $this->expiryDate < $now ? -$days : $days;
     }
 
-    /**
-     * Lot expiré ?
-     */
     public function isExpired(): bool
     {
         return $this->getDaysToExpiry() < 0;
     }
 
-    /**
-     * Niveau de criticité selon les seuils métier :
-     * Vert  : > 6 mois (180j)
-     * Orange: < 90 jours
-     * Rouge : < 30 jours
-     */
+   
     public function getCriticality(int $warningDays = 90, int $criticalDays = 30): string
     {
         if ($this->isExpired()) {
@@ -129,14 +116,14 @@ class StockBatch implements \JsonSerializable
         $days = $this->getDaysToExpiry();
 
         if ($days < $criticalDays) {
-            return 'CRITICAL'; // Rouge
+            return 'CRITICAL'; 
         }
 
         if ($days < $warningDays) {
-            return 'WARNING'; // Orange
+            return 'WARNING'; 
         }
 
-        return 'OK'; // Vert
+        return 'OK';
     }
 
     /**
@@ -159,27 +146,20 @@ class StockBatch implements \JsonSerializable
         $this->quantity -= $quantity;
     }
 
-    /**
-     * Renseigne les informations produit (jointure), utilisées pour l'API.
-     */
+ 
     public function setProductInfo(string $name, string $reference): void
     {
         $this->productName = $name;
         $this->productReference = $reference;
     }
 
-    /**
-     * Renseigne les seuils d'alerte (Orange / Rouge) utilisés pour la criticité API.
-     */
     public function setThresholds(int $warningDays, int $criticalDays): void
     {
         $this->warningDays = $warningDays;
         $this->criticalDays = $criticalDays;
     }
 
-    /**
-     * Sérialisation JSON pour les réponses API (US Part 2 - JsonSerializable).
-     */
+   
     public function jsonSerialize(): array
     {
         return [
@@ -196,9 +176,7 @@ class StockBatch implements \JsonSerializable
         ];
     }
 
-    /**
-     * Marque le lot comme périmé / à détruire.
-     */
+   
     public function markAsExpired(): void
     {
         $this->status = BatchStatus::EXPIRED;

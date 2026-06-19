@@ -1,5 +1,5 @@
 <?php
-// src/Entity/StockMovement.php
+
 
 namespace PharmaFEFO\Entity;
 
@@ -9,7 +9,7 @@ class StockMovement
 {
     private int $id;
     private int $stockBatchId;
-    private string $type; // IN | OUT
+    private string $type;
     private int $quantity;
     private DateTime $date;
 
