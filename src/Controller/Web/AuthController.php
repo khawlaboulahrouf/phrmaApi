@@ -1,6 +1,5 @@
 <?php
-// src/Controller/Web/AuthController.php
-// CONTROLEUR WEB (retourne du HTML) - délègue toute la logique à AuthService.
+
 
 namespace PharmaFEFO\Controller\Web;
 
@@ -15,9 +14,7 @@ class AuthController
         $this->authService = new AuthService();
     }
 
-    /**
-     * Affiche le formulaire de connexion.
-     */
+   
     public function showLogin(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -29,9 +26,7 @@ class AuthController
         require __DIR__ . '/../../../templates/auth/login.php';
     }
 
-    /**
-     * Traite le formulaire de connexion (POST classique, rechargement de page).
-     */
+  
     public function login(): void
     {
         $email = trim($_POST['email'] ?? '');
