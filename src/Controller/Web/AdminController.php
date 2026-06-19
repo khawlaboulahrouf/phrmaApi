@@ -1,6 +1,5 @@
 <?php
-// src/Controller/AdminController.php
-// Espace Administrateur : gestion des utilisateurs et des produits (médicaments)
+
 
 namespace PharmaFEFO\Controller\Web;
 
@@ -17,9 +16,6 @@ class AdminController
         $this->db = Database::getConnection();
     }
 
-    // ================================================================
-    // UTILISATEURS
-    // ================================================================
 
     public function users(): void
     {
@@ -74,9 +70,7 @@ class AdminController
         require __DIR__ . '/../../../templates/admin/users.php';
     }
 
-    // ================================================================
-    // PRODUITS (MÉDICAMENTS)
-    // ================================================================
+ 
 
     public function products(): void
     {
@@ -138,9 +132,7 @@ class AdminController
         require __DIR__ . '/../../../templates/admin/products.php';
     }
 
-    // ================================================================
-    // RAPPORT FINANCIER DES PERTES (US 4.2)
-    // ================================================================
+   
 
     public function reports(): void
     {
