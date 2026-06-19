@@ -1,6 +1,5 @@
 <?php
-// src/Controller/Api/ApiPharmacienController.php
-// CONTROLEUR API : retourne uniquement du JSON. Actions réservées au Pharmacien titulaire.
+
 
 namespace PharmaFEFO\Controller\Api;
 
@@ -18,11 +17,7 @@ class ApiPharmacienController
         $this->stockService = new StockService();
     }
 
-    /**
-     * PATCH /api/v1/batches/{id}/return-supplier
-     * Initie un retour fournisseur (remboursement) pour un lot proche de la péremption.
-     * Rôle PHARMACIEN uniquement.
-     */
+   
     public function returnToSupplier(): void
     {
         AuthService::requireApiRole(User::ROLE_PHARMACIEN);
