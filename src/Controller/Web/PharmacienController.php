@@ -1,8 +1,5 @@
 <?php
-// src/Controller/Web/PharmacienController.php
-// CONTROLEUR WEB : pages Pharmacien Titulaire (seuils d'alerte, validation inventaire).
-// L'action "retour fournisseur" / "déclarer périmé" se font désormais en asynchrone
-// via Api\ApiStockController et Api\ApiPharmacienController (cf. dashboard.js).
+
 
 namespace PharmaFEFO\Controller\Web;
 
@@ -21,9 +18,7 @@ class PharmacienController
         $this->repository = new StockBatchRepository();
     }
 
-    /**
-     * Configurer les seuils d'alerte (jours avant péremption -> Orange / Rouge).
-     */
+   
     public function thresholds(): void
     {
         $message = null;
@@ -47,10 +42,6 @@ class PharmacienController
         require __DIR__ . '/../../../templates/pharmacien/thresholds.php';
     }
 
-    /**
-     * Validation des inventaires : squelette HTML uniquement.
-     * Le tableau des lots est rempli dynamiquement par dashboard.js (réutilise l'API /api/v1/batches).
-     */
     public function inventory(): void
     {
         require __DIR__ . '/../../../templates/pharmacien/inventory.php';
